@@ -1,0 +1,74 @@
+C51 COMPILER V9.60.0.0   ______                                                            06/12/2022 16:37:52 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ______
+OBJECT MODULE PLACED IN .\Objects\¶¨Ê±Æ÷.obj
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE ¶¨Ê±Æ÷.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\¶¨Ê±Æ
+                    -÷.lst) TABS(2) OBJECT(.\Objects\¶¨Ê±Æ÷.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          uint time;
+   5          bit flag = 0,nflag = 0;  // ¶¨Ê±¼ÆÊýÆ÷×´Ì¬
+   6          sbit P20 = P2^0;
+   7          sbit P21 = P2^1;
+   8          void init_timer0();   
+   9          
+  10          void main()
+  11          {
+  12   1        init_timer0();
+  13   1        while(1)
+  14   1        {
+  15   2          P20 = flag;
+  16   2          P21 = nflag;
+  17   2        }
+  18   1      }
+  19          void init_timer0()
+  20          {
+  21   1        
+  22   1        TMOD = 0x61;  // 0x01¶¨Ê±Æ÷0²ÉÓÃ16Î»¹¤×÷·½Ê½ 0x61²ÉÓÃ¼ÆÊýÆ÷1 8Î»×Ô¶¯ÖØ×°ÔØ¹¤×÷·½Ê½
+  23   1        TH0 = (65536-50000)/256;
+  24   1        TL0 = (65536-50000)%256;
+  25   1        TR0 = 1;
+  26   1        ET0 = 1;
+  27   1        EA = 1;
+  28   1        TH1 = 256-3;
+  29   1        TL1 = 256-3;
+  30   1        TR1 = 1;
+  31   1        ET1 = 1;
+  32   1        
+  33   1      }
+  34          void timer0() interrupt 1
+  35          {
+  36   1        TH0 = (65536-50000)/256;
+  37   1        TL0 = (65536-50000)%256;
+  38   1        time++;
+  39   1        if(time >= 10)
+  40   1        {
+  41   2          time = 0;
+  42   2          flag = !flag;
+  43   2        }
+  44   1      }
+  45          void counter1() interrupt 3
+  46          {
+  47   1        nflag = !nflag;
+  48   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     82    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   ______                                                            06/12/2022 16:37:52 PAGE 2   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

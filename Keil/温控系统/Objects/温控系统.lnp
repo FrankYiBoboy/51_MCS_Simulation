@@ -1,0 +1,6 @@
+".\Objects\温控.obj",
+".\Objects\delay.obj",
+".\Objects\lcd1620.obj",
+".\Objects\18b20.obj" 
+TO ".\Objects\温控系统" 
+PRINT(".\Listings\温控系统.m51")

@@ -1,0 +1,117 @@
+C51 COMPILER V9.60.0.0   KEY                                                               06/10/2022 14:25:32 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\key.lst)
+                    - TABS(2) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          #define uchar unsigned char 
+   4          #define uint unsigned int
+   5          bit k_flag=0;
+   6          uchar hour,min,s;
+   7          sbit P10=P1^0;
+   8          sbit P11=P1^1;
+   9          sbit P12=P1^2;
+  10          sbit P13=P1^3;
+  11          sbit P14=P1^4;
+  12          sbit P15=P1^5;
+  13          sbit P16=P1^6;
+  14          sbit P17=P1^7;
+  15          uchar key_num=0;
+  16          uchar code seg[11]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,0xbf};  
+  17          uchar code place_code[8]={0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+  18          uchar code place_code1[8]={0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07};
+  19          uchar cache[8]={0,0,0,0,0,0,0,0};
+  20          void tranfer(uchar a,s,d,f,g,h,j,k)
+  21          {
+  22   1        cache[0]=a;
+  23   1        cache[1]=s;
+  24   1        cache[2]=d;
+  25   1        cache[3]=f;
+  26   1        cache[4]=g;
+  27   1        cache[5]=h;
+  28   1        cache[6]=j;
+  29   1        cache[7]=k;
+  30   1      }
+  31          void delay(uint ms)
+  32          {
+  33   1        uint i,j;
+  34   1        for(i=ms;i>0;i--)
+  35   1          for(j=120;j>0;j--);
+  36   1      }
+  37          
+  38          void nixie_show()
+  39          {
+  40   1        char i;
+  41   1        for(i=0;i<8;i++)
+  42   1        {
+  43   2          P3=place_code[i];
+  44   2          P2=0x00;
+  45   2          P2=seg[cache[i]];
+  46   2          delay(1);
+  47   2        }
+  48   1      }
+  49          void key_scan()
+  50          {
+  51   1        char kx=0,ky=0;
+  52   1        if(k_flag==0)
+  53   1        {
+  54   2          P1=0x0f;
+C51 COMPILER V9.60.0.0   KEY                                                               06/10/2022 14:25:32 PAGE 2   
+
+  55   2          if(P10==0||P11==0||P12==0||P13==0)
+  56   2          {
+  57   3            if(P10==0) kx=-1;
+  58   3            if(P11==0) kx=3;
+  59   3            if(P12==0) kx=7;
+  60   3            if(P13==0) kx=11;
+  61   3          }
+  62   2          P1=0xf0;//
+  63   2          if(P14==0||P15==0||P16==0||P17==0)
+  64   2          {
+  65   3            if(P14==0) ky=4;
+  66   3            if(P15==0) ky=3;
+  67   3            if(P16==0) ky=2;
+  68   3            if(P17==0) ky=1;
+  69   3          }
+  70   2          if(ky==0)  k_flag=0;
+  71   2          else
+  72   2          {
+  73   3            key_num=kx+ky;
+  74   3            k_flag=1;
+  75   3          }
+  76   2        }
+  77   1      }
+  78          
+  79          
+  80          void main()
+  81          {
+  82   1        while(1)
+  83   1        { 
+  84   2          key_scan();
+  85   2          if(k_flag==1)
+  86   2          {
+  87   3            k_flag=0;
+  88   3          }
+  89   2          nixie_show();
+  90   2        }
+  91   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    222    ----
+   CONSTANT SIZE    =     27    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12      15
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

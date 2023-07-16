@@ -1,0 +1,114 @@
+C51 COMPILER V9.59.0.0   ADC0808                                                           06/21/2022 09:22:03 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE ADC0808
+OBJECT MODULE PLACED IN .\Objects\ADC0808.obj
+COMPILER INVOKED BY: E:\keli\C51\BIN\C51.EXE ADC0808.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\ADC0
+                    -808.lst) TABS(2) OBJECT(.\Objects\ADC0808.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          
+   6          sbit START = P2^5;
+   7          sbit EOC = P2^6;
+   8          sbit OE = P2^7;
+   9          sbit CLOCK = P2^4;
+  10          sbit P23 = P2^3; // °ÙÎ»
+  11          sbit P22 = P2^2; // Ê®Î»
+  12          sbit P21 = P2^1; // ¸öÎ»
+  13          
+  14          uchar DATE;
+  15          double BZLC=1.960784;
+  16          double DDATE;
+  17          uchar BW,SW,GW;
+  18          uchar i;
+  19          
+  20          
+  21          uchar code seg[10] = {0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90}; // ÊýÂë¹ÜÊý×ÖÏÔÊ¾(¹²Ñô¼«)
+  22          uchar code seg_0[10] = {0x40,0x79,0x24,0x30,0x19,0x12,0x02,0x78,0x00,0x10}; // ÊýÂë¹ÜÊý×ÖÏÔÊ¾´øÐ¡Êýµã (¹²Ñ
+             -ô¼«)
+  23          void dig_show();
+  24          void delay(uchar ms);
+  25          
+  26          void init() interrupt 1 
+  27          {
+  28   1        CLOCK = ~CLOCK;
+  29   1      }
+  30          void main()
+  31          {
+  32   1        TMOD = 0x02;   // ¶¨Ê±Æ÷0¹¤×÷·½Ê½2
+  33   1        TH0 = 246;
+  34   1        TL0 = 246;
+  35   1        //IE = 0x82;
+  36   1        TR0 = 1;
+  37   1        ET0 = 1;
+  38   1        EA = 1;
+  39   1        TR0 = 1;
+  40   1        
+  41   1        while(1)
+  42   1        {
+  43   2          START = 0;  // Æô¶¯×ª»»Æ÷
+  44   2          START = 1;  // ¸´Î»×ª»»Æ÷
+  45   2          START = 0;  
+  46   2          delay(0.1);
+  47   2          //for(i=0;i<20;i++);
+  48   2          while(EOC == 0)
+  49   2          {
+  50   3            OE = 1;          // ÔÊÐíÊä³ö
+  51   3          }
+  52   2          DATE = P1;        // ¶ÁÈ¡P1¿ÚÊý¾Ý
+  53   2          OE = 0;
+C51 COMPILER V9.59.0.0   ADC0808                                                           06/21/2022 09:22:03 PAGE 2   
+
+  54   2          DDATE = DATE;
+  55   2          DDATE = DDATE*BZLC;  // ÀûÓÃÏßÐÔ×ª»»µçÑ¹Öµ
+  56   2          DATE = DDATE;
+  57   2          BW = DATE/100;
+  58   2          SW = (DATE%100)/10;  
+  59   2          GW = DATE%10;
+  60   2          delay(1);
+  61   2          dig_show();
+  62   2          
+  63   2        }
+  64   1      }
+  65          void dig_show()
+  66          {
+  67   1          P21 = 1;
+  68   1          P0 = seg[GW];
+  69   1          delay(1);
+  70   1          P21 = 0;
+  71   1          P22 = 1;
+  72   1          P0 = seg[SW];
+  73   1          delay(1);
+  74   1          P22 = 0;
+  75   1          P23 = 1;
+  76   1          P0 = seg_0[BW];
+  77   1          delay(1);
+  78   1          P23 = 0;
+  79   1      }
+  80          void delay(uchar ms)
+  81          {
+  82   1        uchar i,j;
+  83   1        for(i=ms;i>0;i--)
+  84   1        {
+  85   2          for(j=120;j>0;j--);
+  86   2        }
+  87   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    190    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     13    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

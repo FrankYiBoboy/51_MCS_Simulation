@@ -1,0 +1,226 @@
+C51 COMPILER V9.59.0.0   ____                                                              06/20/2022 09:05:45 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE ____
+OBJECT MODULE PLACED IN .\Objects\�¿�.obj
+COMPILER INVOKED BY: E:\keli\C51\BIN\C51.EXE �¿�.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\�¿�.ls
+                    -t) TABS(2) OBJECT(.\Objects\�¿�.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <18b20.h>
+   3          #include <delay.h>
+   4          #include <lcd1602.h>
+   5          #include <stdio.h>
+   6          
+   7          
+   8          #define uchar unsigned char
+   9          #define uint unsigned int
+  10            
+  11          sbit key1=P2^0;  // 按键引脚定义
+  12          sbit key2=P2^1;
+  13          sbit key3=P2^2;
+  14          
+  15          sbit relay_jiare=P1^0;  // 加热制冷与蜂鸣器引脚定义
+  16          sbit relay_zhileng=P1^1;
+  17          sbit buzzer=P1^4;
+  18          
+  19          uint setL = 25;     // 设置温度下限
+  20          uint setH = 30;     // 设置温度上限
+  21          uchar DisFlag = 0;  // 更新显示标志
+  22          uchar SetFlag = 0;  // 设置参数标志
+  23          
+  24          uint time2ms=0;   // 定时计数
+  25          uint buzLater=0;  // 蜂鸣器累加检测
+  26          
+  27          uint temp1;               // 读取温度初始值
+  28          float temperature = 0;        // 实际温度值
+  29          uchar read_temp_flag = 1;     // 定义读温度标志
+  30          
+  31          char dis0[16];      //定义显示区域临时存储数组
+  32          char dis1[16];      //定义显示区域临时存储数组
+  33          
+  34          void check_key();   // 按键检查
+  35          void init_timer0();   // 定时器初始化
+  36          void dig_show();    // 显示
+  37          
+  38          //uchar Num = 0;      // 计数
+  39          
+  40          void main()
+  41          {
+  42   1        relay_jiare = 1;
+  43   1        relay_zhileng = 1;
+  44   1        buzzer = 1;
+  45   1        
+  46   1        init_timer0();    // 初始化定时器
+  47   1        LCD_init();       // 初始化LCD
+  48   1        delay_ms(100);
+  49   1        LCD_Clear();
+  50   1          
+  51   1        while(1)
+  52   1        {
+  53   2          dig_show();
+  54   2        }
+C51 COMPILER V9.59.0.0   ____                                                              06/20/2022 09:05:45 PAGE 2   
+
+  55   1      }
+  56          
+  57          void dig_show()
+  58          {
+  59   1        check_key();
+  60   1        if(read_temp_flag == 1)
+  61   1        {
+  62   2          read_temp_flag = 0;
+  63   2          temp1 = read_temperature();           // 读取温度
+  64   2          temperature = (float)temp1*0.0625;    // 实际温度值
+  65   2        }
+  66   1        if(DisFlag == 1)
+  67   1        {
+  68   2          DisFlag=0;
+  69   2          if((temperature>0)&&(temperature<150))
+  70   2          {
+  71   3            sprintf(dis0,"Temp:%4.1f C",temperature);     // 将温度值存储进暂存显示数组
+  72   3            LCD_Write_String(0,0,dis0);                   // 显示第一行第一位
+  73   3            LCD_Write_Char(9,0,0xdf);                     // 显示温度左上角°
+  74   3            
+  75   3            if(temperature<setL)        // 温度过低
+  76   3            {
+  77   4                relay_jiare=0;    // 开启升温 关闭降温
+  78   4                relay_zhileng=1;  
+  79   4            }else if(temperature>setH)  // 温度过高
+  80   3            {
+  81   4                relay_jiare=1;    // 关闭升温 开启降温
+  82   4                relay_zhileng=0;
+  83   4            }else{
+  84   4                relay_jiare=1;    // 关闭升温 关闭降温
+  85   4                relay_zhileng=1;
+  86   4                buzLater=0;       // 正常情况
+  87   4            }
+  88   3            if(buzLater>=2)       // 若非正常清零 过高过低累加 超过2秒即
+  89   3            {
+  90   4              buzzer=0;           // 打开蜂鸣器
+  91   4              delay_ms(1000);       
+  92   4            }else{        
+  93   4              buzzer=1;           // 关闭蜂鸣器
+  94   4            } 
+  95   3          }
+  96   2          
+  97   2          sprintf(dis1," %02d-- %02d       ",setL,setH);    // 将温度范围存储暂定显示数组
+  98   2          LCD_Write_String(0,1,dis1);       // 初始化显示    
+  99   2          if(SetFlag == 0)      // 查询按键设置标志
+ 100   2          {
+ 101   3            LCD_Write_Char(0,1,' ');
+ 102   3            LCD_Write_Char(5,1,' ');      // 更新显示标志
+ 103   3          }else if(SetFlag == 1)//按键设置标志
+ 104   2            {
+ 105   3              LCD_Write_Char(0,1,'W');
+ 106   3              LCD_Write_Char(5,1,' ');    // 更新显示标志(闪烁)
+ 107   3            }else if(SetFlag == 2)  // 查询按键设置标志
+ 108   2            {
+ 109   3              LCD_Write_Char(0,1,' ');
+ 110   3              LCD_Write_Char(5,1,'W');    // 更新显示标志
+ 111   3            } 
+ 112   2        } 
+ 113   1      }
+ 114          
+ 115          void check_key()
+ 116          {
+C51 COMPILER V9.59.0.0   ____                                                              06/20/2022 09:05:45 PAGE 3   
+
+ 117   1        uchar rekey = 0;
+ 118   1        if((key1==0)||(key2==0)||(key3==0))
+ 119   1        {
+ 120   2          delay_ms(10);
+ 121   2          if(rekey==0)  
+ 122   2          {
+ 123   3            if(key1==0)    // 检测按键1是否按下
+ 124   3            {
+ 125   4              rekey=1;
+ 126   4              SetFlag++;  // 设置参数标志
+ 127   4              if(SetFlag >= 3) SetFlag = 0;     // 设置1,设置2
+ 128   4            } 
+ 129   3            else if(key2 == 0)  //   检测按键2是否按下
+ 130   3            {
+ 131   4              rekey=1;
+ 132   4              if(SetFlag == 1)          // 处于设置1
+ 133   4              {
+ 134   5                if(setL > 0 )
+ 135   5                  {
+ 136   6                  setL = setL-1;
+ 137   6                  }
+ 138   5              }
+ 139   4              else if(SetFlag == 2)     // 处于设置2
+ 140   4              {
+ 141   5                if(setH > 0)
+ 142   5                {
+ 143   6                setH = setH-1;
+ 144   6                }
+ 145   5              }           
+ 146   4            }else if(key3==0)     // 检测按键3是否按下
+ 147   3            {
+ 148   4              rekey=1;
+ 149   4              if(SetFlag == 1)      // 处于设置1
+ 150   4              {
+ 151   5                if(setL < 99 )
+ 152   5                {
+ 153   6                setL=setL+1;
+ 154   6                }
+ 155   5              }
+ 156   4              else if(SetFlag==2) // 处于设置2
+ 157   4              {
+ 158   5                if(setH < 99 )
+ 159   5                {
+ 160   6                setH=setH+1;
+ 161   6                }
+ 162   5              }       
+ 163   4            }
+ 164   3          }
+ 165   2        }else{
+ 166   2          rekey = 0;  // 防止重新检测到按键
+ 167   2        }
+ 168   1      }
+ 169          
+ 170          void init_timer0()
+ 171          {
+ 172   1        TMOD = 0x61;
+ 173   1        TH0 = (65536-20000)/256;   // 为定时器赋初值20ms
+ 174   1        TL0 = (65536-20000)%256;
+ 175   1        TR0 = 1;  // 定时器开关打开
+ 176   1        ET0 = 1;  // 定时器中断打开
+ 177   1        EA = 1;   // 总中断打开
+ 178   1      }
+C51 COMPILER V9.59.0.0   ____                                                              06/20/2022 09:05:45 PAGE 4   
+
+ 179          
+ 180          /*    定时器中断程序   */
+ 181          void timer0() interrupt 1
+ 182          {
+ 183   1        TH0 = (65536-20000)/256;   // 为定时器赋初值20ms
+ 184   1        TL0 = (65536-20000)%256;
+ 185   1        time2ms++;
+ 186   1        
+ 187   1        if(time2ms % 10 == 0)   // 每200毫秒进行显示刷新
+ 188   1        {
+ 189   2          DisFlag=1;
+ 190   2          if(time2ms%50==0)     // 每1000毫秒进行读温度刷新
+ 191   2          {
+ 192   3            read_temp_flag=1; //读标志位置1  
+ 193   3          if(buzLater<200)  buzLater++;
+ 194   3          }
+ 195   2        }
+ 196   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    654    ----
+   CONSTANT SIZE    =     33    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     49       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

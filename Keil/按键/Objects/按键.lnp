@@ -1,0 +1,3 @@
+".\Objects\开关.obj" 
+TO ".\Objects\按键" 
+PRINT(".\Listings\按键.m51")

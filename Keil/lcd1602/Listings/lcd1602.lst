@@ -1,0 +1,135 @@
+C51 COMPILER V9.60.0.0   LCD1602                                                           06/14/2022 16:28:53 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN .\Objects\lcd1602.obj
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE lcd1602.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\lcd1
+                    -602.lst) TABS(2) OBJECT(.\Objects\lcd1602.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          
+   4          #define uchar unsigned char
+   5          #define uint unsigned int
+   6            
+   7          char code string_1[] = "Hello";
+   8          char code string_2[] = "World!";
+   9          uchar i = 0,j = 0;
+  10            
+  11          sbit RS = P2^0;
+  12          sbit RW = P2^1;
+  13          sbit E = P2^2;
+  14          
+  15          void lcd_init();
+  16          void write_command(uchar dat); // 写入指令
+  17          void write_data(uchar dat); // 写数据
+  18          void check_BF();  // 读忙信号
+  19          void delay(uchar ms);
+  20          void lcd_pos(uchar pos); // 设定显示位置
+  21          
+  22          void main()
+  23          {
+  24   1        lcd_init();
+  25   1        write_command(0x81);
+  26   1        //lcd_pos(0x81);
+  27   1        delay(1);
+  28   1        while(string_1[i])
+  29   1        {
+  30   2          write_data(string_2[i]);
+  31   2          i++;
+  32   2        }
+  33   1        delay(50);
+  34   1        //lcd_pos(0xc0);
+  35   1        write_command(0x80+0x40);
+  36   1        delay(1);
+  37   1        
+  38   1        while(string_2[j])
+  39   1        {
+  40   2          write_data(string_2[j]);
+  41   2          i++;
+  42   2        }
+  43   1        
+  44   1        while(1)
+  45   1        {
+  46   2          
+  47   2        }
+  48   1      }
+  49          
+  50          void lcd_init()
+  51          {
+  52   1        write_command(0x38); // 功能模式  P181
+  53   1        delay(1);
+  54   1        write_command(0x0c); // 开关显示
+C51 COMPILER V9.60.0.0   LCD1602                                                           06/14/2022 16:28:53 PAGE 2   
+
+  55   1        delay(1);
+  56   1        write_command(0x06); // 显示方式
+  57   1        delay(1);
+  58   1        write_command(0x01); // 清屏
+  59   1        delay(1);
+  60   1      }
+  61          
+  62          void write_command(uchar dat)
+  63          {
+  64   1        RS=0;RW=0;E=0;
+  65   1        P0 = dat;
+  66   1        E = 1;
+  67   1        _nop_();  // 使能端从高电平到低电平执行指令
+  68   1        E = 0;
+  69   1        delay(1);
+  70   1      }
+  71          
+  72          void write_data(uchar dat)
+  73          {
+  74   1        RS=1;RW=0;E=0;
+  75   1        P0 = dat;
+  76   1        E = 1;
+  77   1        _nop_();
+  78   1        E = 0;
+  79   1        delay(1);
+  80   1      }
+  81          
+  82          void check_BF()
+  83          {
+  84   1        uchar dat;
+  85   1        do
+  86   1        {
+  87   2          RS=0;RW=1;E=0;  
+  88   2          E=1;
+  89   2          dat=P0;
+  90   2          _nop_();
+  91   2        }while(dat&0x80);
+  92   1        E = 0;
+  93   1      }
+  94          
+  95          void delay(uchar ms)
+  96          {
+  97   1        uchar i,j;
+  98   1        for(i = ms;i>0;i--)
+  99   1        {
+ 100   2          for(j=120;j>0;j--);
+ 101   2        }
+ 102   1      }
+ 103          
+ 104          void lcd_pos(uchar pos)
+ 105          {
+ 106   1        write_command(pos | 0x80);
+ 107   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    198    ----
+   CONSTANT SIZE    =     13    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   LCD1602                                                           06/14/2022 16:28:53 PAGE 3   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

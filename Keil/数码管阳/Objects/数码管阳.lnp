@@ -1,0 +1,3 @@
+".\Objects\数码管阳.obj" 
+TO ".\Objects\数码管阳" 
+PRINT(".\Listings\数码管阳.m51")

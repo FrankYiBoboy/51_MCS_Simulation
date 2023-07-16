@@ -1,0 +1,43 @@
+A51 MACRO ASSEMBLER  67____                                                               06/07/2022 16:03:04 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\67ª„±‡.obj
+ASSEMBLER INVOKED BY: E:\keil\C51\BIN\A51.EXE 67ª„±‡.asm SET(SMALL) DEBUG PRINT(.\Listings\67ª„±‡.lst) OBJECT(.\Objects\
+                      67ª„±‡.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG     0000H
+0000 C290              2     START:  CLR     P1.0
+0002 12000D            3     LCALL   DELAY
+0005 D290              4     SETB    P1.0
+0007 12000D            5     LCALL   DELAY
+000A 020000            6     LJMP    START
+000D 7D14              7     DELAY:  MOV     R5,#20  ;—” ±◊”≥Ã–Ú —” ±0.2√Î
+000F 7E14              8     D1:             MOV             R6,#20
+0011 7FF8              9     D2:             MOV             R7,#248
+0013 DEFC             10     DJNZ    R6,D2
+0015 DDF8             11     DJNZ    R5,D1   
+0017 22               12             RET
+                      13             
+*** WARNING #A41 IN 13 (67ª„±‡.asm, LINE 13): MISSING 'END' STATEMENT
+A51 MACRO ASSEMBLER  67____                                                               06/07/2022 16:03:04 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+D1 . . . . . . . .  C ADDR   000FH   A   
+D2 . . . . . . . .  C ADDR   0011H   A   
+DELAY. . . . . . .  C ADDR   000DH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+START. . . . . . .  C ADDR   0000H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  1 WARNING(S), 0 ERROR(S)

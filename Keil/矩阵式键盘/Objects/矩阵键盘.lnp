@@ -1,0 +1,4 @@
+".\Objects\ОиеѓМќХЬ.obj",
+".\Objects\ОиеѓМќХЬИФ.obj" 
+TO ".\Objects\ОиеѓМќХЬ" 
+PRINT(".\Listings\ОиеѓМќХЬ.m51")

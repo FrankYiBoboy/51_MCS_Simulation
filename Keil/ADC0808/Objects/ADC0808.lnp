@@ -1,0 +1,3 @@
+".\Objects\ADC0808.obj" 
+TO ".\Objects\ADC0808" 
+PRINT(".\Listings\ADC0808.m51")

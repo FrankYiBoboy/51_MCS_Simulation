@@ -1,0 +1,80 @@
+C51 COMPILER V9.60.0.0   ____                                                              06/09/2022 10:48:07 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ____
+OBJECT MODULE PLACED IN .\Objects\中断.obj
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE 中断.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\中断.ls
+                    -t) TABS(2) OBJECT(.\Objects\中断.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #define uchar unsigned char
+   3          #define uint unsigned int
+   4          sbit P32 = P3^2;
+   5          sbit P33 = P3^3;
+   6          uchar code seg[10] = {0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};  // 共阳极数码管显示
+   7          uchar i = 0;
+   8          
+   9          void init_int0();
+  10          void init_int1();
+  11          
+  12          void main()
+  13          {
+  14   1        while(1)
+  15   1        {
+  16   2          init_int0();
+  17   2          init_int1();
+  18   2          if(i>=10)
+  19   2          {
+  20   3            i = 0;
+  21   3          }
+  22   2          P2 = seg[i];
+  23   2      
+  24   2        }
+  25   1      }
+  26          
+  27          void init_int0()
+  28          {
+  29   1        IT0 = 0;  
+  30   1        EX0 = 1;
+  31   1        EA = 1;
+  32   1        
+  33   1      }
+  34          void init_int1()
+  35          {
+  36   1        IT1 = 0;  
+  37   1        EX1 = 1;
+  38   1        EA = 1;
+  39   1      }
+  40          void int0() interrupt 0
+  41          {
+  42   1        i++;
+  43   1        while(P32 == 0);
+  44   1      }
+  45          void int1() interrupt 2
+  46          {
+  47   1        if(i==0)
+  48   1        {
+  49   2        i = 10;
+  50   2        }
+  51   1        i--;
+  52   1        while(P33 == 0);
+  53   1      
+  54   1      }
+C51 COMPILER V9.60.0.0   ____                                                              06/09/2022 10:48:07 PAGE 2   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     67    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

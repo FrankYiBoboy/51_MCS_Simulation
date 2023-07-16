@@ -1,0 +1,153 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    06/07/2022  19:39:34  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+E:\KEIL\C51\BIN\BL51.EXE .\Objects\数码管阳.obj TO .\Objects\数码管阳 PRINT (.\Listings\数码管阳.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\数码管阳.obj (________)
+  E:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  E:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\数码管阳 (________)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000FH     UNIT         _DATA_GROUP_
+            DATA    0017H     0008H     UNIT         ?DT?________
+            IDATA   001FH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0030H     UNIT         ?PR?MAIN?________
+            CODE    08BCH     0025H     UNIT         ?PR?DIG_SHOW?________
+            CODE    08E1H     001EH     UNIT         ?PR?_DELY?________
+            CODE    08FFH     0016H     UNIT         ?PR?_TRANFER?________
+            CODE    0915H     0012H     UNIT         ?CO?________
+            CODE    0927H     000BH     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\数码管阳 (________)
+
+
+SEGMENT                          DATA_GROUP 
+  +--> CALLED SEGMENT          START    LENGTH
+----------------------------------------------
+?C_C51STARTUP                  -----    -----
+  +--> ?PR?MAIN?________
+  +--> ?C_INITSEG
+
+?PR?MAIN?________              -----    -----
+  +--> ?PR?_TRANFER?________
+  +--> ?PR?DIG_SHOW?________
+
+?PR?_TRANFER?________          0008H    000FH
+
+?PR?DIG_SHOW?________          -----    -----
+  +--> ?CO?________
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/07/2022  19:39:34  PAGE 2
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\数码管阳 (________)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ________
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:091FH         PUBLIC        place_code
+  C:088CH         PUBLIC        main
+  C:08E1H         PUBLIC        _dely
+  C:0915H         PUBLIC        seg
+  C:08BCH         PUBLIC        dig_show
+  C:08FFH         PUBLIC        _tranfer
+  D:0017H         PUBLIC        cache
+  -------         PROC          MAIN
+  C:088CH         LINE#         16
+  C:088CH         LINE#         17
+  C:088CH         LINE#         18
+  C:08B7H         LINE#         19
+  C:08B7H         LINE#         20
+  C:08B7H         LINE#         21
+  C:08BAH         LINE#         22
+  -------         ENDPROC       MAIN
+  -------         PROC          DIG_SHOW
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:08BCH         LINE#         25
+  C:08BCH         LINE#         26
+  C:08BCH         LINE#         29
+  C:08C8H         LINE#         30
+  C:08C8H         LINE#         31
+  C:08CFH         LINE#         32
+  C:08D2H         LINE#         33
+  C:08DDH         LINE#         34
+  C:08E0H         LINE#         35
+  -------         ENDPROC       DIG_SHOW
+  -------         PROC          _DELY
+  D:0006H         SYMBOL        ms
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:08E1H         LINE#         37
+  C:08E1H         LINE#         38
+  C:08E1H         LINE#         40
+  C:08EAH         LINE#         41
+  C:08EAH         LINE#         42
+  C:08F7H         LINE#         43
+  C:08FEH         LINE#         44
+  -------         ENDPROC       _DELY
+  -------         PROC          _TRANFER
+  D:0007H         SYMBOL        a
+  D:0004H         SYMBOL        s
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/07/2022  19:39:34  PAGE 3
+
+
+  D:0002H         SYMBOL        d
+  D:000DH         SYMBOL        f
+  D:000FH         SYMBOL        g
+  D:0011H         SYMBOL        h
+  D:0013H         SYMBOL        j
+  D:0015H         SYMBOL        k
+  C:08FFH         LINE#         46
+  C:08FFH         LINE#         47
+  C:08FFH         LINE#         48
+  C:0901H         LINE#         49
+  C:0903H         LINE#         50
+  C:0905H         LINE#         51
+  C:0908H         LINE#         52
+  C:090BH         LINE#         53
+  C:090EH         LINE#         54
+  C:0911H         LINE#         55
+  C:0914H         LINE#         56
+  -------         ENDPROC       _TRANFER
+  -------         ENDMOD        ________
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELY?________
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00A5H BYTE ( 8%) *
+******************************************************************************
+
+Program Size: data=32.0 xdata=0 code=309
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

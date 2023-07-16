@@ -1,0 +1,210 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    06/21/2022  09:07:54  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+E:\KELI\C51\BIN\BL51.EXE .\Objects\¾ØÕó¼üÅÌ¸Ä.obj TO .\Objects\¾ØÕó¼üÅÌ¸Ä PRINT (.\Listings\¾ØÕó¼üÅÌ¸Ä.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\¾ØÕó¼üÅÌ¸Ä.obj (__________)
+  E:\KELI\C51\LIB\C51S.LIB (?C_STARTUP)
+  E:\KELI\C51\LIB\C51S.LIB (?C?SCDIV)
+  E:\KELI\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\¾ØÕó¼üÅÌ¸Ä (__________)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000FH     UNIT         _DATA_GROUP_
+                    0017H     0009H                  *** GAP ***
+            BIT     0020H.0   0000H.1   UNIT         ?BI?__________
+                    0020H.1   0000H.7                *** GAP ***
+            DATA    0021H     000BH     UNIT         ?DT?__________
+            IDATA   002CH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0066H     UNIT         ?PR?KEY_SCAN?__________
+            CODE    00F5H     0045H     UNIT         ?PR?MAIN?__________
+            CODE    013AH     002BH     UNIT         ?PR?DIG_SHOW?__________
+            CODE    0165H     0022H     UNIT         ?C?LIB_CODE
+            CODE    0187H     001EH     UNIT         ?PR?_DELY?__________
+            CODE    01A5H     0016H     UNIT         ?PR?_TRANFER?__________
+            CODE    01BBH     0016H     UNIT         ?C_INITSEG
+            CODE    01D1H     0012H     UNIT         ?CO?__________
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\¾ØÕó¼üÅÌ¸Ä (__________)
+
+
+SEGMENT                           DATA_GROUP 
+  +--> CALLED SEGMENT           START    LENGTH
+-----------------------------------------------
+?C_C51STARTUP                   -----    -----
+  +--> ?PR?MAIN?__________
+  +--> ?C_INITSEG
+
+?PR?MAIN?__________             -----    -----
+  +--> ?PR?KEY_SCAN?__________
+  +--> ?PR?_TRANFER?__________
+  +--> ?PR?DIG_SHOW?__________
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/21/2022  09:07:54  PAGE 2
+
+
+?PR?_TRANFER?__________         0008H    000FH
+
+?PR?DIG_SHOW?__________         -----    -----
+  +--> ?CO?__________
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\¾ØÕó¼üÅÌ¸Ä (__________)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        __________
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:01DBH         PUBLIC        place_code
+  C:00F5H         PUBLIC        main
+  C:0187H         PUBLIC        _dely
+  B:0090H.0       PUBLIC        P10
+  B:0090H.1       PUBLIC        P11
+  B:0090H.2       PUBLIC        P12
+  B:0090H.3       PUBLIC        P13
+  B:0090H.4       PUBLIC        P14
+  B:0090H.5       PUBLIC        P15
+  B:0090H.6       PUBLIC        P16
+  B:0090H.7       PUBLIC        P17
+  C:01D1H         PUBLIC        seg
+  C:008FH         PUBLIC        key_scan
+  C:013AH         PUBLIC        dig_show
+  D:0021H         PUBLIC        kx
+  D:0022H         PUBLIC        ky
+  B:0020H.0       PUBLIC        k_flag
+  C:01A5H         PUBLIC        _tranfer
+  D:0023H         PUBLIC        cache
+  D:002BH         PUBLIC        key_num
+  -------         PROC          MAIN
+  C:00F5H         LINE#         26
+  C:00F5H         LINE#         27
+  C:00F5H         LINE#         28
+  C:00F5H         LINE#         29
+  C:00F5H         LINE#         30
+  C:00F8H         LINE#         31
+  C:00FBH         LINE#         32
+  C:00FBH         LINE#         33
+  C:00FDH         LINE#         34
+  C:00FDH         LINE#         35
+  C:0135H         LINE#         36
+  C:0138H         LINE#         38
+  -------         ENDPROC       MAIN
+  -------         PROC          DIG_SHOW
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:013AH         LINE#         41
+  C:013AH         LINE#         42
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/21/2022  09:07:54  PAGE 3
+
+
+  C:013AH         LINE#         44
+  C:013DH         LINE#         45
+  C:013DH         LINE#         46
+  C:014BH         LINE#         47
+  C:014EH         LINE#         48
+  C:0159H         LINE#         49
+  C:0164H         LINE#         50
+  -------         ENDPROC       DIG_SHOW
+  -------         PROC          _DELY
+  D:0006H         SYMBOL        ms
+  -------         DO            
+  D:0006H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0187H         LINE#         52
+  C:0187H         LINE#         53
+  C:0187H         LINE#         55
+  C:0190H         LINE#         56
+  C:0190H         LINE#         57
+  C:019DH         LINE#         58
+  C:01A4H         LINE#         59
+  -------         ENDPROC       _DELY
+  -------         PROC          _TRANFER
+  D:0007H         SYMBOL        a
+  D:0004H         SYMBOL        s
+  D:0002H         SYMBOL        d
+  D:000DH         SYMBOL        f
+  D:000FH         SYMBOL        g
+  D:0011H         SYMBOL        h
+  D:0013H         SYMBOL        j
+  D:0015H         SYMBOL        k
+  C:01A5H         LINE#         61
+  C:01A5H         LINE#         62
+  C:01A5H         LINE#         63
+  C:01A7H         LINE#         64
+  C:01A9H         LINE#         65
+  C:01ABH         LINE#         66
+  C:01AEH         LINE#         67
+  C:01B1H         LINE#         68
+  C:01B4H         LINE#         69
+  C:01B7H         LINE#         70
+  C:01BAH         LINE#         71
+  -------         ENDPROC       _TRANFER
+  -------         PROC          KEY_SCAN
+  C:008FH         LINE#         73
+  C:008FH         LINE#         74
+  C:008FH         LINE#         76
+  C:0092H         LINE#         77
+  C:0092H         LINE#         78
+  C:0095H         LINE#         79
+  C:00A1H         LINE#         80
+  C:00A1H         LINE#         81
+  C:00A7H         LINE#         82
+  C:00ADH         LINE#         83
+  C:00B3H         LINE#         84
+  C:00B9H         LINE#         85
+  C:00B9H         LINE#         86
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/21/2022  09:07:54  PAGE 4
+
+
+  C:00BCH         LINE#         87
+  C:00C8H         LINE#         88
+  C:00C8H         LINE#         89
+  C:00CEH         LINE#         90
+  C:00D4H         LINE#         91
+  C:00DAH         LINE#         92
+  C:00E0H         LINE#         93
+  C:00E0H         LINE#         94
+  C:00ECH         LINE#         96
+  C:00ECH         LINE#         97
+  C:00F2H         LINE#         98
+  C:00F4H         LINE#         99
+  C:00F4H         LINE#         100
+  C:00F4H         LINE#         101
+  -------         ENDPROC       KEY_SCAN
+  -------         ENDMOD        __________
+
+  -------         MODULE        ?C?SCDIV
+  C:0165H         PUBLIC        ?C?SCDIV
+  -------         ENDMOD        ?C?SCDIV
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELY?__________
+
+Program Size: data=35.1 xdata=0 code=483
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

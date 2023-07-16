@@ -1,0 +1,1 @@
+"show.c" OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\show.lst) TABS (2) OBJECT(.\Objects\show.obj)

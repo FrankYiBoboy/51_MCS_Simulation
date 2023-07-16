@@ -1,0 +1,103 @@
+C51 COMPILER V9.59.0.0   KEY                                                               12/28/2022 11:20:02 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: E:\Keil\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\key.lst)
+                    - TABS(2) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          #include <key.h>
+   2          
+   3          
+   4          void check_key()
+   5          {
+   6   1        uchar rekey = 0;
+   7   1        if((key1==0)||(key2==0)||(key3==0))
+   8   1        {
+   9   2          delay_ms(10);
+  10   2          if(rekey==0)  
+  11   2          {
+  12   3            if(key1==0)    // 检测按键1是否按下
+  13   3            {
+  14   4              rekey=1;
+  15   4              SetFlag++;  // 设置参数标志
+  16   4              if(SetFlag >= 3) SetFlag = 0;     // 设置1,设置2
+  17   4            } 
+  18   3            else if(key2 == 0)  //   检测按键2是否按下
+  19   3            {
+  20   4              rekey=1;
+  21   4              if(SetFlag == 1)          // 处于设置1
+  22   4              {
+  23   5                if(setL > 0 )
+  24   5                  {
+  25   6                  setL = setL-1;
+  26   6                  }
+  27   5              }
+  28   4              else if(SetFlag == 2)     // 处于设置2
+  29   4              {
+  30   5                if(setH > 0)
+  31   5                {
+  32   6                setH = setH-1;
+  33   6                }
+  34   5              }           
+  35   4            }else if(key3==0)     // 检测按键3是否按下
+  36   3            {
+  37   4              rekey=1;
+  38   4              if(SetFlag == 1)      // 处于设置1
+  39   4              {
+  40   5                if(setL < 99 )
+  41   5                {
+  42   6                setL=setL+1;
+  43   6                }
+  44   5              }
+  45   4              else if(SetFlag==2) // 处于设置2
+  46   4              {
+  47   5                if(setH < 99 )
+  48   5                {
+  49   6                setH=setH+1;
+  50   6                }
+  51   5              }       
+  52   4            }
+  53   3          }
+  54   2        }else{
+C51 COMPILER V9.59.0.0   KEY                                                               12/28/2022 11:20:02 PAGE 2   
+
+  55   2          rekey = 0;  // 防止重新检测到按键
+  56   2        }
+  57   1      }
+  58          
+  59          void page_key()
+  60          {
+  61   1        uchar rekey = 0;
+  62   1        if(key4 == 0)
+  63   1        {
+  64   2          delay_ms(3000);
+  65   2          if(rekey==0)
+  66   2          {
+  67   3            if(key4 == 0)
+  68   3            {
+  69   4              rekey=1;
+  70   4              pageFlag++; // 设置参数标志
+  71   4              if(pageFlag >= 4) pageFlag = 2;     // 页面1 页面2 页面3 页面1按键仅可出现一次
+  72   4            }
+  73   3          }
+  74   2        }else{
+  75   2          rekey = 0;
+  76   2        }
+  77   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    221    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

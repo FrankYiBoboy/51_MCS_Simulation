@@ -1,0 +1,137 @@
+C51 COMPILER V9.60.0.0   ________                                                          06/07/2022 20:01:28 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ________
+OBJECT MODULE PLACED IN .\Objects\æÿ’Ûº¸≈Ã.obj
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE æÿ’Ûº¸≈Ã.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\æÿ’
+                    -Ûº¸≈Ã.lst) TABS(2) OBJECT(.\Objects\æÿ’Ûº¸≈Ã.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5            
+   6          uchar code seg[10] = {0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90}; //  ˝¬Îπ‹ ˝◊÷œ‘ æ(π≤—Ùº´)
+   7          uchar code seg_38[10] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f}; //  ˝¬Îπ‹ ˝◊÷œ‘ æ(π≤“ıº´)
+   8          uchar code place_code[8] = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80}; // 8Œª ˝¬Îπ‹œ‘ æŒª÷√(Œ¥≤…”√38“Î¬Î∆˜)
+   9          uchar code place_code_38[8] = {0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07}; // 8Œª ˝¬Îπ‹œ‘ æŒª÷√(≤…”√38“Î¬Î∆˜
+             -)
+  10          uchar cache[8] = 0; // ª∫¥Ê ˝◊Èœ¬±ÍŒª÷√
+  11          uchar num = 0;
+  12          void key_scan();   // æÿ’Ûº¸≈Ã…®√Ë
+  13          void dely(uint ms);  //  ˝¬Îπ‹œ‘ æ
+  14          void dig_show(); // —” ±
+  15          void tranfer(uchar a,s,d,f,g,h,j,k);
+  16          
+  17          
+  18          void main()
+  19          {
+  20   1        
+  21   1        while(1)
+  22   1        {
+  23   2          
+  24   2          key_scan();
+  25   2          tranfer(0,0,0,0,0,0,num / 10,num % 10);
+  26   2          dig_show();
+  27   2      
+  28   2        }
+  29   1      }
+  30          
+  31          void dig_show()
+  32          {
+  33   1      
+  34   1          uint i;
+  35   1          for(i=0;i<8;i++)
+  36   1          {
+  37   2            P3 = place_code[i];
+  38   2            P2 = 0xff;              // —°÷–Œª÷√πÿ±’ ˝¬Îπ‹ ∑¿÷πÀ≤ ±µÁ∆Ω”∞œÏ
+  39   2            P2 = seg[cache[i]];
+  40   2          }
+  41   1      }
+  42          
+  43          void dely(uint ms)
+  44          {
+  45   1        uint i,j;
+  46   1        for(i=ms;i>0;i--)
+  47   1        {
+  48   2          for(j=120;j>0;j--);
+  49   2        }
+  50   1      }
+  51          
+  52          void tranfer(uchar a,s,d,f,g,h,j,k)
+  53          {
+C51 COMPILER V9.60.0.0   ________                                                          06/07/2022 20:01:28 PAGE 2   
+
+  54   1        cache[0] = a;
+  55   1        cache[1] = s;
+  56   1        cache[2] = d;
+  57   1        cache[3] = f;
+  58   1        cache[4] = g;
+  59   1        cache[5] = h;
+  60   1        cache[6] = j;
+  61   1        cache[7] = k;
+  62   1      }
+  63          
+  64          void key_scan()
+  65          {
+  66   1        uchar i,temp,num = 0;
+  67   1        for(i=0;i<4;i++)
+  68   1        {
+  69   2          P1 = _crol_(0xfe,i);
+  70   2          temp = P1;
+  71   2          temp =temp & 0xf0;
+  72   2          if(temp != 0xf0)
+  73   2          {
+  74   3            _nop_();
+  75   3            temp = P1;
+  76   3            temp =temp & 0xf0;
+  77   3            if(temp != 0xf0)
+  78   3            {
+  79   4              temp = P1;
+  80   4              switch(temp)
+  81   4              {
+  82   5                case 0xee:num = 0;break;
+  83   5                case 0xde:num = 1;break;
+  84   5                case 0xbe:num = 2;break;
+  85   5                case 0x7e:num = 3;break;
+  86   5                case 0xed:num = 4;break;
+  87   5                case 0xdd:num = 5;break;
+  88   5                case 0xbd:num = 6;break;
+  89   5                case 0x7d:num = 7;break;
+  90   5                case 0xeb:num = 8;break;
+  91   5                case 0xdb:num = 9;break;
+  92   5                case 0xbb:num = 10;break;
+  93   5                case 0x7b:num = 11;break;
+  94   5                case 0xe7:num = 12;break;
+  95   5                case 0xd7:num = 13;break;
+  96   5                case 0xb7:num = 14;break;
+  97   5                case 0x77:num = 15;break;
+  98   5                default:break;
+  99   5              }
+ 100   4              while((temp & 0xf0)!=0xf0)
+ 101   4              {
+ 102   5                temp = P1;
+ 103   5                temp = temp&0xf0;
+ 104   5              }
+ 105   4            }
+ 106   3          }
+ 107   2        }
+ 108   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    372    ----
+   CONSTANT SIZE    =     36    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   ________                                                          06/07/2022 20:01:28 PAGE 3   
+
+   DATA SIZE        =      9      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

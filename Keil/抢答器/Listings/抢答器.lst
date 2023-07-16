@@ -1,0 +1,74 @@
+C51 COMPILER V9.60.0.0   ______                                                            01/08/2022 15:01:20 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ______
+OBJECT MODULE PLACED IN .\Objects\ÇÀ´ðÆ÷.obj
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE ÇÀ´ðÆ÷.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\ÇÀ´ðÆ
+                    -÷.lst) TABS(2) OBJECT(.\Objects\ÇÀ´ðÆ÷.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          
+   3          #define uchar unsigned char
+   4          #define uint unsigned int
+   5          uchar code seg[10] = {0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+   6          uchar code place_code[8]= {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
+   7          uchar index[8] = 0;
+   8          
+   9          void transfer(uint count,uchar order[]);  //¸Ä±äÊýÂë¹ÜË÷Òý
+  10          void delay_ms(uint ms); //ÑÓÊ±º¯Êý
+  11          void show();    //ÏÔÊ¾º¯Êý
+  12          
+  13          void main()
+  14          {
+  15   1        uchar index_0[8] = {9,1,2,6,5,6,7,8};  //ÊýÂë¹ÜÒÀ´ÎÏÔÊ¾Êý×Ö
+  16   1        transfer(8,index_0);
+  17   1        while(1)
+  18   1        {
+  19   2          show();
+  20   2        }
+  21   1      }
+  22          
+  23          void delay_ms(uint ms)
+  24          {
+  25   1        uint i;
+  26   1        for(;ms>0;ms--)
+  27   1        {
+  28   2          for(i=0;i<120;i++);
+  29   2        }
+  30   1      }
+  31          void transfer(uint count,uchar order[])
+  32          {
+  33   1        uint i;
+  34   1        for(i=0;i<count;i++)
+  35   1        {
+  36   2          index[i] = *(order+i);
+  37   2        } 
+  38   1      }
+  39          void show()
+  40          {
+  41   1        uchar i = 2;
+  42   1        for(i=0;i<8;i++)
+  43   1        {
+  44   2          P3 = place_code[i];
+  45   2          P2 = 0xff;
+  46   2          P2 = seg[index[i]];
+  47   2        } 
+  48   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    155    ----
+   CONSTANT SIZE    =     26    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.60.0.0   ______                                                            01/08/2022 15:01:20 PAGE 2   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      8      13
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

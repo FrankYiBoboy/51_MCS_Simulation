@@ -1,0 +1,207 @@
+C51 COMPILER V9.59.0.0   LCD12864                                                          12/28/2022 11:20:02 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE LCD12864
+OBJECT MODULE PLACED IN .\Objects\LCD12864.obj
+COMPILER INVOKED BY: E:\Keil\C51\BIN\C51.EXE LCD12864.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\LCD
+                    -12864.lst) TABS(2) OBJECT(.\Objects\LCD12864.obj)
+
+line level    source
+
+   1          #include <LCD12864.h>
+   2          
+   3           
+   4          void Read_busy()    // ¶ÁÃ¦
+   5          {
+   6   1        P0 = 0X00;
+   7   1        DI = 0;
+   8   1        RW = 1;
+   9   1        EN = 1;
+  10   1        while(P0 & 0x80)
+  11   1        {}
+  12   1        EN = 0;
+  13   1      }
+  14          
+  15          void write_LCD_command(uchar value) //Ð´ÃüÁîº¯Êý
+  16          {
+  17   1        Read_busy();
+  18   1        DI = 0; //0:Ð´Ö¸Áî
+  19   1        RW = 0; //0:Ð´²Ù×÷
+  20   1        LCD_databus = value;
+  21   1        EN = 1; //ENÏÂ½µÑØËø´æÓÐÐ§Êý¾Ý
+  22   1        _nop_();
+  23   1        _nop_();
+  24   1        _nop_();//¿ÕÖ¸Áî£¬¶ÌÔÝÑÓÊ±
+  25   1        EN = 0;
+  26   1      }
+  27          
+  28          void write_LCD_data(uchar value)  //Ð´Êý¾Ýº¯Êý
+  29          {
+  30   1        Read_busy();
+  31   1        DI = 1; //1:Ð´Êý¾Ý
+  32   1        RW = 0; //Ð´²Ù×÷
+  33   1        LCD_databus = value;
+  34   1        EN = 1; //ENÏÂ½µÑØËø´æÓÐÐ§Êý¾Ý
+  35   1        _nop_();
+  36   1        _nop_();
+  37   1        _nop_();//¿ÕÖ¸Áî£¬¶ÌÔÝÑÓÊ±
+  38   1        EN = 0;
+  39   1      }
+  40          
+  41          void Set_page(uchar page) //ÉèÖÃÏÔÊ¾ÆðÊ¼Ò³
+  42          {
+  43   1        page = 0xB8 | page; //Ò³µÄÊ×µØÖ·Îª0xB8
+  44   1        write_LCD_command(page);
+  45   1      }
+  46          
+  47          void Set_line(uchar startline)  //ÉèÖÃÏÔÊ¾ÆðÊ¼ÐÐ
+  48          {
+  49   1        startline = 0xC0 | startline;
+  50   1        write_LCD_command(startline);
+  51   1      }
+  52          
+  53          void Set_column(uchar column) //ÉèÖÃÏÔÊ¾µÄÁÐ
+  54          {
+C51 COMPILER V9.59.0.0   LCD12864                                                          12/28/2022 11:20:02 PAGE 2   
+
+  55   1        column = column & 0x3F; //ÁÐµÄ×î´óÖµÎª64
+  56   1        column = column | 0x40; //ÁÐµÄÊ×µØÖ·Îª0x40
+  57   1        write_LCD_command(column);
+  58   1      } 
+  59          
+  60          void SetOnOff(uchar onoff)  //ÏÔÊ¾¿ª¹Øº¯Êý£¬0x3E:¹Ø 0x3F:¿ª
+  61          {
+  62   1        onoff = 0x3E | onoff; //onoffÎª0Ê±¹ØÏÔÊ¾£¬Îª1Ê±¿ªÏÔÊ¾
+  63   1        write_LCD_command(onoff);
+  64   1      }
+  65          
+  66          void SelectScreen(uchar screen) //Ñ¡ÔñÆÁÄ»
+  67          {
+  68   1        switch(screen)
+  69   1        {
+  70   2          case 0:CS1 = 0;CS2 = 0;break;//È«ÆÁ
+  71   2          case 1:CS1 = 0;CS2 = 1;break;//×ó°ëÆÁ
+  72   2          case 2:CS1 = 1;CS2 = 0;break;//ÓÒ°ëÆÁ
+  73   2          default:break;
+  74   2        }
+  75   1      }
+  76          
+  77          void ClearScreen(uchar screen)  //ÇåÆÁ
+  78          {
+  79   1        uchar i,j;
+  80   1        SelectScreen(screen);
+  81   1        for(i=0;i<8;i++)
+  82   1        {
+  83   2          Set_page(i);
+  84   2          Set_column(0);
+  85   2          for(j=0;j<64;j++)
+  86   2          {
+  87   3            write_LCD_data(0x00); //Ð´Èë0£¬µØÖ·Ö¸Õë×Ô¶¯¼Ó1
+  88   3          }
+  89   2        }
+  90   1      }
+  91          
+  92          void InitLCD()  // ³õÊ¼»¯LCD
+  93          {
+  94   1        Read_busy();
+  95   1        SelectScreen(0);
+  96   1        SetOnOff(0);
+  97   1        SelectScreen(0);
+  98   1        SetOnOff(1);
+  99   1        SelectScreen(0);
+ 100   1        ClearScreen(0);
+ 101   1        Set_line(0);
+ 102   1      }
+ 103          
+ 104          void show_ch(uchar screen,uchar page,uchar column,uchar *p)   // ÏÔÊ¾ºº×Ö ÊäÈëÆÁÄ»Î»ÖÃ Ò³Î»ÖÃ ÁÐÎ»ÖÃ ×Ö·û´
+             -®ÏÔÊ¾
+ 105          {
+ 106   1        uchar i;
+ 107   1        SelectScreen(screen);
+ 108   1        Set_page(page);
+ 109   1        Set_column(column);
+ 110   1        
+ 111   1        for(i=0;i<16;i++) //²ÉÓÃ16*16µÄ×ÖÄ£
+ 112   1        {
+ 113   2          write_LCD_data(p[i]);
+ 114   2        }
+ 115   1        
+C51 COMPILER V9.59.0.0   LCD12864                                                          12/28/2022 11:20:02 PAGE 3   
+
+ 116   1        Set_page(page+1);
+ 117   1        Set_column(column);
+ 118   1        for(i=0;i<16;i++) //²ÉÓÃ16*16µÄ×ÖÄ£,"Ð¡ËÄºÅ×Ö"
+ 119   1        {
+ 120   2          write_LCD_data(p[i+16]);
+ 121   2        }
+ 122   1      }
+ 123          
+ 124          void show_num(uchar screen,uchar page,uchar column,uchar *p)//(ÆÁÄ»£¬ÁÐ£¬ÐÐ£¬Êý¾ÝµØÖ·)
+ 125          {
+ 126   1        uchar i;
+ 127   1        SelectScreen(screen);
+ 128   1        Set_page(page);
+ 129   1        Set_column(column);
+ 130   1        
+ 131   1        for(i=0;i<8;i++)  //²ÉÓÃ16*8µÄ×ÖÄ£
+ 132   1        {
+ 133   2          write_LCD_data(p[i]);
+ 134   2        }
+ 135   1        
+ 136   1        Set_page(page+1);
+ 137   1        Set_column(column);
+ 138   1        for(i=0;i<8;i++)  //²ÉÓÃ16*8µÄ×ÖÄ£,"Ð¡ËÄºÅ×Ö"
+ 139   1        {
+ 140   2          write_LCD_data(p[i+8]);
+ 141   2        }
+ 142   1      }
+ 143          
+ 144          void show_im(uchar screen,uchar page,uchar column,uchar *p)  // ÓëÉÏÍ¬ ÏÔÊ¾32*32Í¼Ïñ
+ 145          {
+ 146   1        uchar i;
+ 147   1        SelectScreen(screen);
+ 148   1        Set_page(page);
+ 149   1        Set_column(column);
+ 150   1      
+ 151   1        for(i=0;i<32;i++) //²ÉÓÃ16*16µÄ×ÖÄ£
+ 152   1        {
+ 153   2          write_LCD_data(p[i]);
+ 154   2        }
+ 155   1        
+ 156   1        Set_page(page+1);
+ 157   1        Set_column(column);
+ 158   1        for(i=0;i<32;i++) //²ÉÓÃ16*16µÄ×ÖÄ£,"Ð¡ËÄºÅ×Ö"
+ 159   1        {
+ 160   2          write_LCD_data(p[i+32]);
+ 161   2        }
+ 162   1        
+ 163   1        Set_page(page+2);
+ 164   1        Set_column(column);
+ 165   1        for(i=0;i<32;i++) //²ÉÓÃ16*16µÄ×ÖÄ£,"Ð¡ËÄºÅ×Ö"
+ 166   1        {
+ 167   2          write_LCD_data(p[i+64]);
+ 168   2        }
+ 169   1        
+ 170   1        Set_page(page+3);
+ 171   1        Set_column(column);
+ 172   1        for(i=0;i<32;i++) //²ÉÓÃ16*16µÄ×ÖÄ£,"Ð¡ËÄºÅ×Ö"
+ 173   1        {
+ 174   2          write_LCD_data(p[i+96]);
+ 175   2        }
+ 176   1      }
+
+C51 COMPILER V9.59.0.0   LCD12864                                                          12/28/2022 11:20:02 PAGE 4   
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    493    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      18
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

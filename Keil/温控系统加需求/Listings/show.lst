@@ -1,0 +1,183 @@
+C51 COMPILER V9.60.0.0   SHOW                                                              06/16/2022 12:01:31 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SHOW
+OBJECT MODULE PLACED IN .\Objects\show.obj
+COMPILER INVOKED BY: E:\keil\C51\BIN\C51.EXE show.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\show.ls
+                    -t) TABS(2) OBJECT(.\Objects\show.obj)
+
+line level    source
+
+   1          #include <reg51.h>
+   2          #include <show.h>
+   3          #include <LCD12864.h>
+*** ERROR C202 IN LINE 233 OF LCD12864.h: 'shuzi': undefined identifier
+*** ERROR C202 IN LINE 234 OF LCD12864.h: 'shuzi': undefined identifier
+*** ERROR C141 IN LINE 238 OF LCD12864.h: syntax error near 'dat', expected ')'
+*** ERROR C202 IN LINE 240 OF LCD12864.h: 'dat': undefined identifier
+*** ERROR C202 IN LINE 241 OF LCD12864.h: 'dat': undefined identifier
+*** ERROR C202 IN LINE 242 OF LCD12864.h: 'dat': undefined identifier
+*** ERROR C202 IN LINE 248 OF LCD12864.h: 'shuzi': undefined identifier
+*** ERROR C202 IN LINE 249 OF LCD12864.h: 'shuzi': undefined identifier
+   4          
+   5          void dis_shijian()
+   6          {
+   7   1        write_shu16(3*2,1*8,shi,0);
+   8   1        write_shuzi(1,3*2,3*8,fuhao[1],0);    
+*** ERROR C202 IN LINE 8 OF show.c: 'fuhao': undefined identifier
+   9   1        write_shu16(3*2,4*8,fen,0); 
+  10   1        write_shuzi(1,3*2,6*8,fuhao[1],0);    
+*** ERROR C202 IN LINE 10 OF show.c: 'fuhao': undefined identifier
+  11   1        write_shu16(3*2,7*8,miao,0);
+  12   1        
+  13   1        write_shu16(1*2,6*8,nian,0);  
+  14   1        write_shu16(1*2,10*8,yue,0);  
+  15   1        write_shu16(1*2,14*8,ri,0);
+  16   1          
+  17   1        write_shu16(2*2,4*8,n_yue,0);
+*** ERROR C202 IN LINE 17 OF show.c: 'n_yue': undefined identifier
+  18   1        write_shuzi(1,2*2,6*8,fuhao[0],0);    
+*** ERROR C202 IN LINE 18 OF show.c: 'fuhao': undefined identifier
+  19   1        write_shu16(2*2,7*8,n_ri,0);
+*** ERROR C202 IN LINE 19 OF show.c: 'n_ri': undefined identifier
+  20   1      
+  21   1        if(week==0)
+  22   1          {
+  23   2           write_yhanzi(1,4,7*16,xingqi[0]);   
+*** ERROR C202 IN LINE 23 OF show.c: 'xingqi': undefined identifier
+  24   2          }
+  25   1          if(week==1)
+  26   1          {
+  27   2           write_yhanzi(1,4,7*16,xingqi[1]);  
+*** ERROR C202 IN LINE 27 OF show.c: 'xingqi': undefined identifier
+  28   2          }
+  29   1          if(week==2)
+  30   1          {
+  31   2           write_yhanzi(1,4,7*16,xingqi[2]);   
+*** ERROR C202 IN LINE 31 OF show.c: 'xingqi': undefined identifier
+  32   2          }
+  33   1          if(week==3)
+  34   1          {
+  35   2           write_yhanzi(1,4,7*16,xingqi[3]);   
+*** ERROR C202 IN LINE 35 OF show.c: 'xingqi': undefined identifier
+  36   2          }
+  37   1          if(week==4)
+C51 COMPILER V9.60.0.0   SHOW                                                              06/16/2022 12:01:31 PAGE 2   
+
+  38   1          {
+  39   2           write_yhanzi(1,4,7*16,xingqi[4]);   
+*** ERROR C202 IN LINE 39 OF show.c: 'xingqi': undefined identifier
+  40   2          }
+  41   1          if(week==5)
+  42   1          {
+  43   2           write_yhanzi(1,4,7*16,xingqi[5]);   
+*** ERROR C202 IN LINE 43 OF show.c: 'xingqi': undefined identifier
+  44   2          }
+  45   1          if(week==6)
+  46   1          {
+  47   2           write_yhanzi(1,4,7*16,xingqi[6]);   
+*** ERROR C202 IN LINE 47 OF show.c: 'xingqi': undefined identifier
+  48   2          }
+  49   1          if(week==7)
+  50   1          {
+  51   2           week=0;
+  52   2           write_yhanzi(1,4,7*16,xingqi[0]);  
+*** ERROR C202 IN LINE 52 OF show.c: 'xingqi': undefined identifier
+  53   2          } 
+  54   1        write_shu18b20(3*2,10*8,temperature,0); 
+*** ERROR C202 IN LINE 54 OF show.c: 'temperature': undefined identifier
+  55   1        write_shuzi(1,3*2,12*8,dian,0); 
+*** ERROR C202 IN LINE 55 OF show.c: 'dian': undefined identifier
+  56   1      }
+  57          
+  58          void init_12864_dis()
+  59          {
+  60   1        cs1=1; //?????
+  61   1        cs2=0;
+  62   1        write_yhanzi(7,0,16,dzrl);     //???????
+*** ERROR C202 IN LINE 62 OF show.c: 'dzrl': undefined identifier
+  63   1        write_yhanzi(2,2,0,yangli);    //?(0) ?(1)
+*** ERROR C202 IN LINE 63 OF show.c: 'yangli': undefined identifier
+  64   1        write_yhanzi(2,4,0,nongli);    //?(0) ?(1)
+*** ERROR C202 IN LINE 64 OF show.c: 'nongli': undefined identifier
+  65   1                                                          //  write_yhanzi(2,6,0,0x00);   //??
+  66   1                                                          //  write_yhanzi(2,6,0,shijian);   //??
+  67   1        write_shu16(1*2,4*8,0x20,0);
+  68   1        write_yhanzi(1,2,4*16,qita[0]);   //?
+*** ERROR C202 IN LINE 68 OF show.c: 'qita': undefined identifier
+  69   1        write_yhanzi(1,2,6*16,qita[1]);   //?
+*** ERROR C202 IN LINE 69 OF show.c: 'qita': undefined identifier
+  70   1        write_yhanzi(2,4,5*16,qita[6]);   //??  
+*** ERROR C202 IN LINE 70 OF show.c: 'qita': undefined identifier
+  71   1        dis_shijian();  //????
+  72   1        write_yhanzi(1,6,7*16,wendu_fuhao);   //?
+*** ERROR C202 IN LINE 72 OF show.c: 'wendu_fuhao': undefined identifier
+  73   1      }
+  74          
+  75          void init_12864_set1()
+  76          {
+  77   1        write_yhanzi(1,0,2*16,qita[0]);   //?
+*** ERROR C202 IN LINE 77 OF show.c: 'qita': undefined identifier
+  78   1        write_yhanzi(1,0,4*16,qita[1]);   //?
+*** ERROR C202 IN LINE 78 OF show.c: 'qita': undefined identifier
+  79   1        write_yhanzi(1,0,6*16,qita[2]);   //?
+*** ERROR C202 IN LINE 79 OF show.c: 'qita': undefined identifier
+  80   1      
+  81   1        write_yhanzi(1,2,2*16,qita[3]);   //?
+*** ERROR C202 IN LINE 81 OF show.c: 'qita': undefined identifier
+  82   1        write_yhanzi(1,2,4*16,qita[4]);   //? 
+C51 COMPILER V9.60.0.0   SHOW                                                              06/16/2022 12:01:31 PAGE 3   
+
+*** ERROR C202 IN LINE 82 OF show.c: 'qita': undefined identifier
+  83   1        write_yhanzi(1,2,6*16,qita[5]);   //?
+*** ERROR C202 IN LINE 83 OF show.c: 'qita': undefined identifier
+  84   1        write_yhanzi(2,4,3*16,qita[6]);   //??
+*** ERROR C202 IN LINE 84 OF show.c: 'qita': undefined identifier
+  85   1      
+  86   1        write_yhanzi(2,6,0*16,qita[8]);   //??
+*** ERROR C202 IN LINE 86 OF show.c: 'qita': undefined identifier
+  87   1        write_yhanzi(1,6,5*16,qita[3]);   //?
+*** ERROR C202 IN LINE 87 OF show.c: 'qita': undefined identifier
+  88   1        write_yhanzi(1,6,7*16,qita[4]);   //? 
+*** ERROR C202 IN LINE 88 OF show.c: 'qita': undefined identifier
+  89   1        write_yhanzi(2,4,0*16,shezi[0]);     //??
+*** ERROR C202 IN LINE 89 OF show.c: 'shezi': undefined identifier
+  90   1                    
+  91   1        if(flag_clock_kai == 1)
+  92   1          write_yhanzi_fanbai(1,6,2*16,qita[10],0);   //?
+*** ERROR C202 IN LINE 92 OF show.c: 'qita': undefined identifier
+  93   1        else 
+  94   1          write_yhanzi_fanbai(1,6,2*16,qita[11],0);   //?
+*** ERROR C202 IN LINE 94 OF show.c: 'qita': undefined identifier
+  95   1        dis_shijian_set();  //????
+  96   1      }
+  97          
+  98          
+  99          void dis_shijian_set()  //????
+ 100          {
+ 101   1        write_shu16(0*2,0*8,0x20,0);
+ 102   1        write_shu16(1*2,2*8,shi,0);
+ 103   1        write_shu16(1*2,6*8,fen,0); 
+ 104   1        write_shu16(1*2,10*8,miao,0);
+ 105   1        write_shu16(0*2,2*8,nian,0);  
+ 106   1        write_shu16(0*2,6*8,yue,0); 
+ 107   1        write_shu16(0*2,10*8,ri,0);
+ 108   1        if(week>=1)
+ 109   1        { 
+ 110   2         write_shu16(2*2,10*8,week-1,0);
+ 111   2        }
+ 112   1        if(week<=0)
+ 113   1        {
+ 114   2         week=7;write_shu16(2*2,10*8,week-1,0);
+ 115   2        }
+ 116   1        write_shu16(3*2,8*8,shi1,0);
+ 117   1        write_shu16(3*2,12*8,fen1,0);
+ 118   1        if(flag_clock_kai == 1)
+ 119   1        write_yhanzi_fanbai(1,6,2*16,qita[10],0);   //?
+*** ERROR C202 IN LINE 119 OF show.c: 'qita': undefined identifier
+ 120   1        else 
+ 121   1        write_yhanzi_fanbai(1,6,2*16,qita[11],0);   //?     
+*** ERROR C202 IN LINE 121 OF show.c: 'qita': undefined identifier
+ 122   1      }
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  45 ERROR(S)

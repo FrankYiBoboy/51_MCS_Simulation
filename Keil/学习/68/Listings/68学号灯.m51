@@ -1,0 +1,186 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    06/21/2022  08:59:45  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+E:\KELI\C51\BIN\BL51.EXE .\Objects\68Ñ§ºÅµÆ.obj TO .\Objects\68Ñ§ºÅµÆ PRINT (.\Listings\68Ñ§ºÅµÆ.m51)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\68Ñ§ºÅµÆ.obj (68______)
+  E:\KELI\C51\LIB\C51S.LIB (?C_STARTUP)
+  E:\KELI\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\68Ñ§ºÅµÆ (68______)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0001H     UNIT         ?DT?DIG_SHOW?68______
+            DATA    0009H     0001H     UNIT         ?DT?68______
+            DATA    000AH     0001H     UNIT         _DATA_GROUP_
+            IDATA   000BH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0063H     UNIT         ?PR?KEY_SCAN_TEST?68______
+            CODE    00F2H     0021H     UNIT         ?PR?MAIN?68______
+            CODE    0113H     0019H     UNIT         ?PR?DIG_SHOW?68______
+            CODE    012CH     0018H     UNIT         ?CO?68______
+            CODE    0144H     0014H     UNIT         ?PR?_DELAY_MS?68______
+            CODE    0158H     000EH     UNIT         ?PR?DELAY_1MS?68______
+            CODE    0166H     0004H     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\68Ñ§ºÅµÆ (68______)
+
+
+SEGMENT                              DATA_GROUP 
+  +--> CALLED SEGMENT              START    LENGTH
+--------------------------------------------------
+?C_C51STARTUP                      -----    -----
+  +--> ?PR?MAIN?68______
+  +--> ?C_INITSEG
+
+?PR?MAIN?68______                  000AH    0001H
+  +--> ?CO?68______
+  +--> ?PR?_DELAY_MS?68______
+
+?PR?_DELAY_MS?68______             -----    -----
+  +--> ?PR?DELAY_1MS?68______
+
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/21/2022  08:59:45  PAGE 2
+
+
+UNRESOLVED EXTERNAL SYMBOLS:
+   KEY_SCAN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\68Ñ§ºÅµÆ (68______)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        68______
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  C:0158H         PUBLIC        delay_1ms
+  C:00F2H         PUBLIC        main
+  C:0134H         PUBLIC        seg
+  D:0009H         PUBLIC        key_flag
+  C:0144H         PUBLIC        _delay_ms
+  C:0113H         PUBLIC        dig_show
+  C:013CH         PUBLIC        seg_key
+  C:008FH         PUBLIC        key_scan_test
+  C:012CH         PUBLIC        seg_xust
+  -------         PROC          DIG_SHOW
+  -------         DO            
+  D:0008H         SYMBOL        i
+  -------         ENDDO         
+  C:0113H         LINE#         14
+  C:0113H         LINE#         15
+  C:0113H         LINE#         16
+  C:0116H         LINE#         17
+  C:011CH         LINE#         18
+  C:0121H         LINE#         19
+  C:0128H         LINE#         20
+  C:012BH         LINE#         21
+  -------         ENDPROC       DIG_SHOW
+  -------         PROC          MAIN
+  -------         DO            
+  D:000AH         SYMBOL        i
+  -------         ENDDO         
+  C:00F2H         LINE#         22
+  C:00F2H         LINE#         23
+  C:00F2H         LINE#         24
+  C:00F2H         LINE#         25
+  C:00F2H         LINE#         30
+  C:0100H         LINE#         31
+  C:0100H         LINE#         33
+  C:0108H         LINE#         34
+  C:010FH         LINE#         35
+  -------         ENDPROC       MAIN
+  -------         PROC          DELAY_1MS
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0158H         LINE#         39
+  C:0158H         LINE#         40
+  C:0158H         LINE#         42
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/21/2022  08:59:45  PAGE 3
+
+
+  C:0165H         LINE#         43
+  -------         ENDPROC       DELAY_1MS
+  -------         PROC          _DELAY_MS
+  D:0004H         SYMBOL        n
+  C:0144H         LINE#         44
+  C:0148H         LINE#         45
+  C:0148H         LINE#         46
+  C:0152H         LINE#         47
+  C:0152H         LINE#         48
+  C:0155H         LINE#         49
+  C:0157H         LINE#         50
+  -------         ENDPROC       _DELAY_MS
+  -------         PROC          KEY_SCAN_TEST
+  C:008FH         LINE#         51
+  C:008FH         LINE#         52
+  C:008FH         LINE#         54
+  C:0093H         LINE#         55
+  C:0093H         LINE#         56
+  C:0099H         LINE#         57
+  C:0099H         LINE#         58
+  C:009AH         LINE#         59
+  C:00A0H         LINE#         60
+  C:00A0H         LINE#         61
+  C:00C2H         LINE#         62
+  C:00C2H         LINE#         63
+  C:00C7H         LINE#         64
+  C:00CCH         LINE#         65
+  C:00D1H         LINE#         66
+  C:00D6H         LINE#         67
+  C:00DBH         LINE#         68
+  C:00E0H         LINE#         69
+  C:00E5H         LINE#         70
+  C:00ECH         LINE#         71
+  C:00ECH         LINE#         72
+  C:00ECH         LINE#         73
+  C:00ECH         LINE#         74
+  C:00EFH         LINE#         75
+  C:00EFH         LINE#         76
+  C:00F1H         LINE#         77
+  -------         ENDPROC       KEY_SCAN_TEST
+  -------         ENDMOD        68______
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DIG_SHOW?68______
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN_TEST?68______
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  KEY_SCAN
+    MODULE:  .\Objects\68Ñ§ºÅµÆ.obj (68______)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  KEY_SCAN
+    MODULE:  .\Objects\68Ñ§ºÅµÆ.obj (68______)
+    ADDRESS: 011DH
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  06/21/2022  08:59:45  PAGE 4
+
+
+Program Size: data=12.0 xdata=0 code=362
+LINK/LOCATE RUN COMPLETE.  4 WARNING(S),  0 ERROR(S)
