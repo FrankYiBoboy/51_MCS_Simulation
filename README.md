@@ -11,11 +11,11 @@
 
 - 温控系统
 
-![温控系统](.\source\temperature.png)
+![温控系统](./source/temperature.png)
 
 - AD转换
 
-![AD转换](.\source\adTransform.png)
+![AD转换](./source/adTransform.png)
 
 **其余demo不作展示，自行仿真运行**
 
